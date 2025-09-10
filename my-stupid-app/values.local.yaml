@@ -1,0 +1,24 @@
+environment: local
+
+kind: Pod
+
+containers:
+  webserver:
+    name: webserver
+    image: nginx:latest
+    port: 8080
+
+  client:
+    name: client
+    image: curl:latest
+    command: ["curl"]
+    args: ["http://localhost:8080"]
+
+service:
+  type: ClusterIP
+  port: 8080
+
+serviceAccount:
+  create: false
+ingress:
+  enabled: false

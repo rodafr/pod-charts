@@ -1,0 +1,21 @@
+{{- if eq .Values.environment "local" }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Release.Name }}-pod
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  containers:
+  {{- range .Values.containers }}
+    - name: {{ .name }}
+      image: {{ .image }}
+      {{- if .port }}
+      ports:
+        - containerPort: {{ .port }}
+      {{- end }}
+      {{- if .command }}
+      command: {{ .command }}
+      {{- end }}
+  {{- end }}
+{{- end }}
